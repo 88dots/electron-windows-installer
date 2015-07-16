@@ -1,17 +1,15 @@
-# Atom Shell Installer
+# Electron Windows Installer
 
 ### Can be used with Gulp build system.
 
-[![Build status](https://ci.appveyor.com/api/projects/status/32r7s2skrgm9ubva/branch/master?svg=true)](https://ci.appveyor.com/project/bhaal275/atom-shell-installer/branch/master)
-
 Module that builds Windows installers for
-[Atom Shell](https://github.com/atom/atom-shell) apps using
+[Electron](https://github.com/atom/electron) apps using
 [Squirrel](https://github.com/Squirrel/Squirrel.Windows).
 
 ## Installing
 
 ```sh
-npm install --save-dev atom-shell-installer
+npm install --save-dev electron-windows-installer
 ```
 
 ## Configuring
@@ -20,13 +18,13 @@ In your `gulpfile.js` add the following:
 
 ```js
 var gulp = require('gulp');
-var atomShellInstaller = require('atom-shell-installer');
+var windowsInstaller = require('electron-windows-installer');
 
 gulp.task('create-windows-installer', function (done) {
-  atomShellInstaller({
-    appDirectory: 'path/to/atom-shell',
+  windowsInstaller({
+    appDirectory: 'path/to/electron/app',
     outputDirectory: 'installer',
-    exe: 'atom.exe'
+    exe: 'electron.exe'
   }).then(function () {
     done();
   });
@@ -34,27 +32,27 @@ gulp.task('create-windows-installer', function (done) {
 }
 ```
 
-This assumes you have an Atom Shell app built at the given `appDirectory`, and your application files are available at `${appDirectory}/resources/app/` or `${appDirectory}/resources/app.asar`.
+This assumes you have an Electron app built at the given `appDirectory`, and your application files are available at `${appDirectory}/resources/app/` or `${appDirectory}/resources/app.asar`.
 
 Then run `gulp create-windows-installer` and you will have an `.nupkg`, a
 `RELEASES` file, and a `.exe` installer file in the `outputDirectory` folder.
 
 ##Advanced Configuring
 
-So you build an Atom-Shell application, and you want to start distributing it, you can add following tasks to your gulpfile:
+So you build an Electron application, and you want to start distributing it, you can add following tasks to your gulpfile:
 
 ```js
 // Npm modules required for this setup.
 var gulp = require('gulp');
-var downloadatomshell = require('gulp-download-atom-shell');
+var downloadElectron = require('gulp-download-electron');
 var rimraf = require('rimraf');
 var asar = require('gulp-asar');
-var atomShellInstaller = require('atom-shell-installer');
+var windowsInstaller = require('electron-windows-installer');
 
-// A task to download Atom-Shell utilizing https://github.com/r0nn/gulp-download-atom-shell
-// It downloads atom-shell with the specified version, and unpacks it to a provided directory.
+// Example task to download Electron
+// It downloads Electron with the specified version, and unpacks it to a provided directory.
 gulp.task('download', function (cb) {
-  downloadatomshell({
+  downloadElectron({
     version: '0.22.3',
     outputDir: 'cache'
   }, cb);
@@ -66,14 +64,14 @@ gulp.task('clean-dist', function (cb) {
   rimraf('./dist', cb);
 });
 
-// Task to copy the downloaded atom-shell into the distribution directory.
-gulp.task('copy-atom', ['clean-dist'], function () {
+// Task to copy the downloaded Electron into the distribution directory.
+gulp.task('copy-electron', ['clean-dist'], function () {
   return gulp.src('./cache/**/*')
       .pipe(gulp.dest('dist/'));
 });
 
-// Task that copies all necessary app files into atom-shell resources/app directory.
-// This is a default directory used by atom-shell.
+// Task that copies all necessary app files into Electron resources/app directory.
+// This is a default directory used by Electron.
 // Copy there all files that your application needs to run properly.
 gulp.task('prepFiles', ['clean-dist', 'copy-atom'], function () {
   return gulp.src(['./node_modules/**/*', './resources/**/*', './build/**/*', './package.json'], { base: './'})
@@ -95,7 +93,7 @@ gulp.task('clean-app', ['clean-dist', 'create-archive'], function (cb) {
 
 // Final task to create the installer and save it in the ./installer/ directory.
 gulp.task('create-windows-installer', ['clean-app'], function (done) {
-  atomShellInstaller({
+  windowsInstaller({
     appDirectory: 'dist',
     outputDirectory: 'installer',
     exe: 'atom.exe'
@@ -111,7 +109,7 @@ There are several configuration settings supported:
 
 | Config Name           | Required | Description |
 | --------------------- | -------- | ----------- |
-| `appDirectory`        | Yes      | The folder path of your Atom Shell-based app |
+| `appDirectory`        | Yes      | The folder path of your Electron-based app |
 | `outputDirectory`     | No       | The folder path to create the `.exe` installer in. Defaults to the `installer` folder at the project root. |
 | `loadingGif`          | No       | The local path to a `.gif` file to display during install. |
 | `authors`             | Yes      | The authors value for the nuget package metadata. Defaults to the `author` field from your app's package.json file when unspecified. |
