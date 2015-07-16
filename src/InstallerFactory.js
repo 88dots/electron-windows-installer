@@ -138,9 +138,9 @@ class InstallerFactory {
       '-NoDefaultExcludes'
     ];
 
-    if (process.platform !== "win32") {
+    if (process.platform !== 'win32') {
 	args.unshift(cmd);
-	cmd = "wine";
+	cmd = 'wine';
     }
 
     return Util.exec(cmd, args)
