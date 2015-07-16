@@ -21,7 +21,7 @@
     "plugin",
     "gulpplugin"
   ],
-  "homepage": "https://github.com/88dots/electron-windows-installer,
+  "homepage": "https://github.com/88dots/electron-windows-installer",
   "devDependencies": {
     "babel": "^4.3.0",
     "babel-eslint": "^2.0.2",
