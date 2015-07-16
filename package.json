@@ -1,7 +1,7 @@
 {
-  "name": "atom-shell-installer",
-  "version": "0.2.4",
-  "description": "Module to build Windows installers for Atom Shell apps, can be used with Gulp build system.",
+  "name": "electron-windows-installer",
+  "version": "0.3.0",
+  "description": "Module to build Windows installers for Electron apps, can be used with Gulp build system.",
   "main": "dist/library-dist.js",
   "scripts": {
     "prepublish": "gulp build",
@@ -11,22 +11,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/domderen/atom-shell-installer.git"
+    "url": "https://github.com/88dots/electron-windows-installer"
   },
   "keywords": [
     "gulp",
-    "atom-shell",
+    "electron",
     "windows",
     "installer",
     "plugin",
     "gulpplugin"
   ],
-  "author": "domderen",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/domderen/atom-shell-installer/issues"
-  },
-  "homepage": "https://github.com/domderen/atom-shell-installer",
+  "homepage": "https://github.com/88dots/electron-windows-installer,
   "devDependencies": {
     "babel": "^4.3.0",
     "babel-eslint": "^2.0.2",
